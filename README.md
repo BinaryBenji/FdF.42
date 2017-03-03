@@ -1,2 +1,3 @@
 # FdF.42
-First graphics :)
+
+First graphics : Drawing platforms 
