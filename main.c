@@ -40,16 +40,48 @@ void	draw_line(int coordx1, int coordx2, int coordy1, int coordy2, void *mlx, vo
 	}
 }
 
+int*	alloc_line_coords()
+{
+
+}
+
+t_coord *alloc_all_coords(char *path, t_coord **coords)
+{
+	int east;
+	int south;
+
+	i = 0;
+	while(get_next_line(argv[1]) == 1)
+	{
+		while (str[east] != '\0')
+			east++;
+		if (!(coords[north] = (t_coord *)malloc((east)* sizeof(t_coord))
+			return (NULL);
+		north++;
+		east = 0;
+	}
+	return (coords);
+}
+
+t_coord *assign_all_coords(t_coord **coords)
+{
+
+
+}
+
 
 int main()
 {
 	void *mlx;
 	void *win;
 
+	t_coord **coords;
+
 	int coordx1 = 450;
 	int coordx2 = 50;
 	int coordy1 = 799;
 	int coordy2 = 200;
+
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 1000, 1000, "FdF");
 	draw_line(coordx1, coordx2, coordy1, coordy2, mlx, win);
