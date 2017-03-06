@@ -18,21 +18,17 @@
 
 t_coord		**work_coords(char *path, t_coord **coords)
 {
-	int		east;
 	int		south;
 	char 	*str;
 
 	i = 0;
-	while(get_next_line(argv[1]) == 1)
+	while ((get_next_line(path, line)) == 1)
 	{
-		while (str[east] != '\0')
-			east++;
-		if (!(coords[north] = (t_coord *)malloc((east)* sizeof(t_coord))))
+		if (!(coords[south] = (t_coord *)malloc((ft_strlen(line)) * sizeof(t_coord))))
 			return (NULL);
-		if ((coords[north] = assign_all_coords(coords, line)) == NULL)
-			return NULL;
-		north++;
-		east = 0;
+		if ((coords[south] = assign_all_coords(coords, line, south)) == NULL)
+			return (NULL);
+		south++;
 	}
 	return (coords);
 }
@@ -41,7 +37,7 @@ t_coord		**work_coords(char *path, t_coord **coords)
 **	Assign the coords given by the file to a tab of t_coord.
 */
 
-t_coord		*assign_all_coords(char **line, t_coord **coords, int north)
+t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
 {
 	char 	*str;
 	char 	tmp[2];
@@ -66,7 +62,7 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int north)
 			}
 			tmp[j] = str[i];
 			j = 0;
-			if (coords[north][east] = assign_one_coord(tmp, coords[north][east], east, i))
+			if (coords[south][east] = assign_one_coord(tmp, coords[south][east], east, south))
 				return (NULL);
 			east++;
 		}
@@ -80,13 +76,12 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int north)
 **	Assign the coords given by the file to one t_coord.
 */
 
-t_coord		assign_one_coord(char *tmp, t_coord coord, int east, int i)
+t_coord		assign_one_coord(char *tmp, t_coord coord, int east, , int south)
 {
 	if (!(coord = (t_coord)malloc(sizeof(t_coord))))
 		return NULL;
 	coord->x = east;
-	coord->y = north;
-	coord->value = ft_atoi(tmp);
-	coord->index = i;
+	coord->y = south;
+	coord->z = ft_atoi(tmp);
 	return (coord);
 }

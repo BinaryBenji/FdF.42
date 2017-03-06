@@ -21,8 +21,7 @@ typedef struct s_coord
 {
 	int x;
 	int y;
-	int value;
-	int index;
+	int z;
 }			   t_coord;
 
 void		draw_line(int x1, int x2, int dy1, int dy2, void *mlx, void *win);

@@ -51,16 +51,12 @@ int main(int argc, char **argc)
 	void	*win;
 	t_coord **coords;
 
-	/*int coordx1 = 450;
-	int coordx2 = 50;
-	int coordy1 = 799;
-	int coordy2 = 200;*/
 	if (argc != 2)
 		return (usage());
 	if ((coords = work_coords(coords)) == NULL)
 		return (error());
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 1000, 1000, "FdF");
-	draw_line(coordx1, coordx2, coordy1, coordy2, mlx, win);
+	draw_line(x1, x2, y1, y2, mlx, win);
 	mlx_loop(mlx);
 }
