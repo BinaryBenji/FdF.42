@@ -76,8 +76,10 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
 **	Assign the coords given by the file to one t_coord.
 */
 
-t_coord		assign_one_coord(char *tmp, t_coord coord, int east, , int south)
+t_coord		assign_one_coord(char *tmp, int east, int south)
 {
+	t_coord coord;
+
 	if (!(coord = (t_coord)malloc(sizeof(t_coord))))
 		return NULL;
 	coord->x = east;
