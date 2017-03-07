@@ -26,7 +26,9 @@ NAME = fdf
 
 # Project related variables
 SRC_PATH =  src
-SRC_NAME =  main.c
+SRC_NAME =  main.c \
+				utils.c \
+				file.c
 OBJ_PATH =  obj
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
