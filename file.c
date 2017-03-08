@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
+
 /*
 **	All the coords handling is here.
 **	We allocate the length of each line in a tab of t_coord.
@@ -20,7 +22,9 @@ t_coord		**work_coords(char *path, t_coord **coords)
 {
 	int		south;
 	char 	*str;
-
+	int i;
+	static char *line = NULL;
+	
 	i = 0;
 	while ((get_next_line(path, line)) == 1)
 	{
@@ -62,7 +66,7 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
 			}
 			tmp[j] = str[i];
 			j = 0;
-			if (coords[south][east] = assign_one_coord(tmp, coords[south][east], east, south))
+			if (coords[south][east] = assign_one_coord(tmp, east, south))
 				return (NULL);
 			east++;
 		}
@@ -80,10 +84,10 @@ t_coord		assign_one_coord(char *tmp, int east, int south)
 {
 	t_coord coord;
 
-	if (!(coord = (t_coord)malloc(sizeof(t_coord))))
-		return NULL;
-	coord->x = east;
-	coord->y = south;
-	coord->z = ft_atoi(tmp);
+	if (!(coord = ((t_coord)malloc(sizeof(t_coord)))))
+		return (NULL);
+	coord.x = east;
+	coord.y = south;
+	coord.z = ft_atoi(tmp);
 	return (coord);
 }

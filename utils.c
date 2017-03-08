@@ -10,20 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
+
 /*
 **	Error case
 */
 
-void	error(void)
+int		error(void)
 {
 	ft_putstr_fd("error\n", 1);
+	return (-1);
 }
 
 /*
 **	Usage	
 */
 
-void	usage(void)
+int		usage(void)
 {
 	ft_putstr_fd("usage: fdf file\n", 2);
+	return (-1);
 }

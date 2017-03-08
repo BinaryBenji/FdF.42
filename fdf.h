@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "libft/libft.h"
 
 typedef struct s_coord
 {
@@ -25,10 +26,10 @@ typedef struct s_coord
 }			   t_coord;
 
 void		draw_line(int x1, int x2, int dy1, int dy2, void *mlx, void *win);
-void		error(void);
-void		usage(void);
+int			error(void);
+int			usage(void);
 t_coord		**work_coords(char *path, t_coord **coords);
 t_coord		*assign_all_coords(char **line, t_coord **coords, int north);
-t_coord		assign_one_coord(char *tmp, t_coord coord, int east, int i);
+t_coord		assign_one_coord(char *tmp, int east, int i);
 
 #endif
