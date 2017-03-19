@@ -18,15 +18,16 @@
 **		Then we assign each t_coord variable of the tab
 */
 
-t_coord		**work_coords(char *path, t_coord **coords)
+t_coord		**work_coords(int fd, t_coord **coords)
 {
 	int		south;
 	char 	*str;
 	int i;
-	static char *line = NULL;
+	char *line = NULL;
 	
 	i = 0;
-	while ((get_next_line(path, line)) == 1)
+	south = 0;
+	while ((get_next_line(fd, &line)) == 1)
 	{
 		if (!(coords[south] = (t_coord *)malloc((ft_strlen(line)) * sizeof(t_coord))))
 			return (NULL);
@@ -41,7 +42,7 @@ t_coord		**work_coords(char *path, t_coord **coords)
 **	Assign the coords given by the file to a tab of t_coord.
 */
 
-t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
+t_coord		*assign_all_coords(t_coord **coords, char *line, int south)
 {
 	char 	*str;
 	char 	tmp[2];
@@ -52,12 +53,12 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
 	east = 0;
 	i = 0;
 	j = 0;
-	str = ft_strdup(str);
+	str = ft_strdup(line);
 	while (str[i])
 	{
 		if (str[i] == '-' || str[i] == ' ')
 			NULL;
-		else if (ft_isdigit(ft_atoi(str[i])) >= 0)
+		else if (ft_isdigit(str[i]) >= 0)
 		{
 			if (str[i - 1] == '-')
 			{
@@ -66,8 +67,7 @@ t_coord		*assign_all_coords(char **line, t_coord **coords, int south)
 			}
 			tmp[j] = str[i];
 			j = 0;
-			if (coords[south][east] = assign_one_coord(tmp, east, south))
-				return (NULL);
+			coords[south][east] = assign_one_coord(tmp, east, south);
 			east++;
 		}
 		else
@@ -84,10 +84,25 @@ t_coord		assign_one_coord(char *tmp, int east, int south)
 {
 	t_coord coord;
 
-	if (!(coord = ((t_coord)malloc(sizeof(t_coord)))))
-		return (NULL);
+	// Unprotected malloc 
 	coord.x = east;
 	coord.y = south;
 	coord.z = ft_atoi(tmp);
 	return (coord);
 }
+
+/*void	print_coords(t_coord **coords)
+{
+	int i;
+	int j;
+
+	j = 0;
+	i = 0;
+	while (coords[i] != N)
+	{
+		printf("%d %d %d \n", coords[i][j].x, coords[i][j].x, coords[i][j].z)
+		j++;
+
+	}
+
+}*/

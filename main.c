@@ -17,7 +17,7 @@
 **	Bresenham Algorithm for tracing a line.
 */
 
-void		draw_line(int x1, int x2, int y1, int y2, void *mlx, void *win)
+/*void		draw_line(int x1, int x2, int y1, int y2, void *mlx, void *win)
 {
 	int dx;
 	int dy;
@@ -35,7 +35,7 @@ void		draw_line(int x1, int x2, int y1, int y2, void *mlx, void *win)
 	while(x < end)
 	{
 	//	mlx_pixel_put(mlx, win, x, y, 0x00FFFFFF);
-		if(p < 0)
+		if (p < 0)
 			p = p + 2 * dy;
 		else
 		{
@@ -44,25 +44,24 @@ void		draw_line(int x1, int x2, int y1, int y2, void *mlx, void *win)
 		}
 		x++;
 	}
-}
+}*/											
 
 int main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*win;
+	//void	*mlx;
+	//void	*win;
 	t_coord **coords;
-
-	int x1 = 5;
-	int x2 = 2;
-	int y1 = 4;
-	int y2 = 99;
+	int fd;
 
 	if (argc != 2)
 		return (usage());
-	if ((coords = work_coords(argv[1], coords)) == NULL)
+	fd = open(argv[1], O_RDONLY);
+	if ((coords = work_coords(fd, coords)) == NULL)
 		return (error());
+	//print_coords(coords);
 	//mlx = mlx_init();
 	//win = mlx_new_window(mlx, 1000, 1000, "FdF");
-	draw_line(x1, x2, y1, y2, mlx, win);
+	//draw_line(x1, x2, y1, y2, mlx, win);
 	//mlx_loop(mlx);
+	return (0);
 }
