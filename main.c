@@ -26,6 +26,6 @@ int main(int argc, char **argv)
 	if (coords == NULL)
 		return (error());
 	//print_coords(coords);
-	//ft_mapdraw(coords, mlx, win);
+	ft_mapdraw(coords, mlx, win);
 	return (0);
 }
