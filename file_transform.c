@@ -22,7 +22,7 @@ t_coord		**work_coords(int fd, t_coord **coords)
 {
 	int		south;
 	t_coord **tmpall;
-	char *line = NULL;
+	char 	*line = NULL;
 	
 	south = 0;
 	while ((get_next_line(fd, &line)) == 1)
@@ -42,11 +42,13 @@ t_coord		**work_coords(int fd, t_coord **coords)
 
 t_coord		*assign_all_coords(char *line, int south)
 {
-	char **tab;
-	int i;
+	char 	**tab;
+	int 	i;
 	t_coord *aline;
 
 	tab = ft_strsplit(line, ' ');
+	if (false_tab(tab) == 1)
+		return (NULL);
 	if (!(aline = (t_coord*)malloc(sizeof(t_coord) * ft_tablen(tab))))
 		return (NULL);
 	i = 0;
@@ -64,6 +66,32 @@ t_coord		*assign_all_coords(char *line, int south)
 **	Gives length of a tab 
 **	Need to add in libft
 */
+
+int 	false_tab(char **tab)
+{
+	int i;
+	int j;
+	int moins;
+
+	moins = 0;
+	j = 0;
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		if (tab[i][0] == '-' && tab[i][1] > '0' && tab[i][1] < '9')
+			j++;
+		while (tab[i][j])
+		{
+			if (tab[i][j] < '0' || tab[i][j] > '9')
+				return (1);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (0);
+}
+
 
 int 	ft_tablen(char **tab)
 {

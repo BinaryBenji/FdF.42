@@ -18,6 +18,7 @@
 #include <math.h>
 #include "libft/libft.h"
 #include <fcntl.h>
+#include <mlx.h>
 
 typedef struct s_coord
 {
@@ -31,8 +32,9 @@ int			error(void);
 int			usage(void);
 t_coord		**work_coords(int fd, t_coord **coords);
 t_coord		*assign_all_coords(char *line, int north);
-int 	ft_tablen(char **tab);
-void	print_coords(t_coord **coords);
-//void	print_coords(t_coord **coords)
+int 		ft_tablen(char **tab);
+void		print_coords(t_coord **coords);
+void		ft_mapdraw(t_coord **coords, void *mlx, void *win);
+int 		false_tab(char **tab);
 
 #endif
