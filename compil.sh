@@ -1,1 +1,1 @@
-cc -o mlx main.c -lmlx -framework OpenGL -framework AppKit
+cc -o mlx main.c utils.c file_transform.c libft/libft.a -g -lmlx -framework OpenGL -framework AppKit

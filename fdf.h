@@ -30,8 +30,8 @@ void		draw_line(int x1, int x2, int dy1, int dy2, void *mlx, void *win);
 int			error(void);
 int			usage(void);
 t_coord		**work_coords(int fd, t_coord **coords);
-t_coord		*assign_all_coords(t_coord **coords, char *line, int north);
-t_coord		assign_one_coord(char *tmp, int east, int i);
+t_coord		*assign_all_coords(char *line, int north);
+int 	ft_tablen(char **tab);
 //void	print_coords(t_coord **coords)
 
 #endif
