@@ -32,6 +32,7 @@ int			usage(void);
 t_coord		**work_coords(int fd, t_coord **coords);
 t_coord		*assign_all_coords(char *line, int north);
 int 	ft_tablen(char **tab);
+void	print_coords(t_coord **coords);
 //void	print_coords(t_coord **coords)
 
 #endif

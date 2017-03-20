@@ -58,6 +58,7 @@ int main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if ((coords = work_coords(fd, coords)) == NULL)
 		return (error());
+	print_coords(coords);
 	//print_coords(coords);
 	//mlx = mlx_init();
 	//win = mlx_new_window(mlx, 1000, 1000, "FdF");

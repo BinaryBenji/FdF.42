@@ -75,18 +75,29 @@ int 	ft_tablen(char **tab)
 	return (i);
 }
 
-/*void	print_coords(t_coord **coords)
+/*
+**	Print all
+*/
+
+void	print_coords(t_coord **coords)
 {
 	int i;
 	int j;
 
 	j = 0;
 	i = 0;
-	while (coords[i] != N)
+	while (1)
 	{
-		printf("%d %d %d \n", coords[i][j].x, coords[i][j].x, coords[i][j].z)
-		j++;
-
+		while (1)
+		{
+			printf("x = %d || y = %d || z = %d \n", coords[i][j].x, coords[i][j].y, coords[i][j].z);
+			j++;
+			if ((coords[i][j-1].x + 1) != coords[i][j].x)
+				break;
+		}
+		i++;
+		j = 0;
+		if ((coords[i-1][j].y + 1) != coords[i][j].y)
+			break;
 	}
-
-}*/
+}
