@@ -41,11 +41,13 @@ typedef struct s_env
 void		draw_line(int x1, int y1, int x2, int y2, void *mlx, void *win);
 int			error(void);
 int			usage(void);
-t_coord		**work_coords(int fd, t_coord **coords);
+t_coord		**work_coords(int fd);
 t_coord		*assign_all_coords(char *line, int north);
-int 		ft_tablen(char **tab);
+int 		ft_tablen_str(char **tab);
 void		print_coords(t_coord **coords);
-void		ft_mapdraw(t_coord **coords, void *mlx, void *win);
+void		ft_mapdraw(t_coord **coords, t_env env);
 int 		false_tab(char **tab);
+t_env 		init_map(t_env env);
+int 		key_pressed(int keycode, t_env env);
 
 #endif

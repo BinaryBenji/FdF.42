@@ -15,8 +15,8 @@
 
 t_env init_map(t_env env)
 {
-	env->height = 1200;
-	env->width = 1200;
+	env.height = 1200;
+	env.width = 1200;
 	return (env);
 }
 
@@ -28,17 +28,16 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		return (usage());
-	fd = open(argv[1], O_RDONLY);
-	coords = work_coords(fd, coords);
+	if (!(fd = open(argv[1], O_RDONLY)))
+		return (error());
+	coords = work_coords(fd);
 	if (coords == NULL)
 		return (error());
 	close(fd);
 	env = init_map(env);
+
+
 	//ft_mapdraw(env, coords);
-
-
 	//print_coords(coords);
-
-	
 	return (0);
 }

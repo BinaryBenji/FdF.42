@@ -47,17 +47,18 @@ int 	key_pressed(int keycode, t_env env)
 {
 	if (keycode == 53)
 		exit(1);
+	return (0);
 }
 
 /*
 **	Initialize the map which moves according to events
 */
 
-void	ft_mapdraw(t_coord **coords, t_env env)
+/*void	ft_mapdraw(t_coord **coords, t_env env)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF"); // center 600 600 limit 1000 1000 
 	total_draw(env, coords);
 	mlx_key_hook(env->win, key_pressed, &env);
 	mlx_loop(mlx);
-}
+}*/

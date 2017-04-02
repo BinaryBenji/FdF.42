@@ -18,12 +18,14 @@
 **		Then assign all coords with sub function
 */
 
-t_coord		**work_coords(int fd, t_coord **coords)
+t_coord		**work_coords(int fd)
 {
 	int		south;
 	t_coord **tmpall;
 	char 	*line = NULL;
 	
+	if (!(tmpall = (t_coord**)malloc(sizeof(t_coord**))))
+		return (NULL);
 	south = 0;
 	while ((get_next_line(fd, &line)) == 1)
 	{
@@ -71,9 +73,7 @@ int 	false_tab(char **tab)
 {
 	int i;
 	int j;
-	int moins;
 
-	moins = 0;
 	j = 0;
 	i = 0;
 	while (tab[i] != NULL)
