@@ -12,11 +12,18 @@
 
 #include "fdf.h"
 
+
+t_env init_map(t_env env)
+{
+	env->height = 1200;
+	env->width = 1200;
+	return (env);
+}
+
 int main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*win;
 	t_coord **coords;
+	t_env	env;
 	int 	fd;
 
 	if (argc != 2)
@@ -25,7 +32,13 @@ int main(int argc, char **argv)
 	coords = work_coords(fd, coords);
 	if (coords == NULL)
 		return (error());
+	close(fd);
+	env = init_map(env);
+	//ft_mapdraw(env, coords);
+
+
 	//print_coords(coords);
-	ft_mapdraw(coords, mlx, win);
+
+	
 	return (0);
 }

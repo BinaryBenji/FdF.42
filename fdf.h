@@ -20,12 +20,23 @@
 #include <fcntl.h>
 #include <mlx.h>
 
+
 typedef struct s_coord
 {
 	int x;
 	int y;
 	int z;
-}			   t_coord;
+}				t_coord;
+
+typedef struct s_env
+{
+	void *mlx;
+	void *win;
+	int	 width;
+	int	 height;
+}			   t_env;
+
+
 
 void		draw_line(int x1, int y1, int x2, int y2, void *mlx, void *win);
 int			error(void);

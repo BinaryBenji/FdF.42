@@ -49,7 +49,7 @@ t_coord		*assign_all_coords(char *line, int south)
 	tab = ft_strsplit(line, ' ');
 	if (false_tab(tab) == 1)
 		return (NULL);
-	if (!(aline = (t_coord*)malloc(sizeof(t_coord) * ft_tablen(tab))))
+	if (!(aline = (t_coord*)malloc(sizeof(t_coord) * ft_tablen_str(tab))))
 		return (NULL);
 	i = 0;
 	while(tab[i] != NULL)
@@ -93,7 +93,11 @@ int 	false_tab(char **tab)
 }
 
 
-int 	ft_tablen(char **tab)
+/*
+**	Gives nb of strings in a tab
+*/
+
+int 	ft_tablen_str(char **tab)
 {
 	int i;
 
@@ -104,7 +108,7 @@ int 	ft_tablen(char **tab)
 }
 
 /*
-**	Print all
+**	Print all (debug)
 */
 
 void	print_coords(t_coord **coords)

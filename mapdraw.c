@@ -16,48 +16,48 @@
 **	Bresenham Algorithm for tracing a line.
 */
 
-void		draw_line(int x1, int y1, int x2, int y2, void *mlx, void *win)
+/*void	try_draw_line(int x1, int y1, int x2, int y2, t_coords coords)
 {
-	int dx;
-	int dy;
-	int p;
-	int end;
-	int x;
-	int y;
+	int delta_x;
+	int delta_y;
+	int incr1;
+	int incr2;
 
-	dx = abs(x1 - x2);
-	dy = abs(y1 - y2);
-	p = 2 * dy - dx;
-	x = (x1 <= x2) ? (x1) : (x2);
-	y = (x == x1) ? (y1) : (y2);
-	end = (x == x1) ? (x2) : (x1);
-	while(x < end)
-	{
-		mlx_pixel_put(mlx, win, x, y, 0x00FFFFFF);
-		if (p < 0)
-			p = p + 2 * dy;
-		else
-		{
-			y++;
-			p = p + 2 * (dy - dx);
-		}
-		x++;
-	}
+	delta_x = abs(x2 - x1);
+	delta_y = abs(y2 - y1);
+	incr1 = (x2 - x1) ? 1 : -1;
+	incr2 = (y2 - y1) ? 1 : -1;
+	if ((delta_x - delta_y) > 0) 
+		pixels(env, 1); 
+	else
+		pixels(env, 0);
 }
 
-/*int		on_click(int keycode, void *param)
+void 	pixels(t_env, int decider)
 {
-	printf("keycode : %d", keycode);
-	return (1);
-}*/
 
-void	ft_mapdraw(t_coord **coords, void *mlx, void *win)
+}
+*/
+
+/*
+**	Events
+*/
+
+int 	key_pressed(int keycode, t_env env)
 {
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 1200, 1200, "FdF"); // center 600 600 limit 1000 1000 
-	//mlx_key_hook(win, on_click, 0);
-	//draw_line(200,200,1000,200,mlx,win);
+	if (keycode == 53)
+		exit(1);
+}
 
-	mlx_pixel_put(mlx, win, 600, 600, 0x00FFFFFF);
+/*
+**	Initialize the map which moves according to events
+*/
+
+void	ft_mapdraw(t_coord **coords, t_env env)
+{
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF"); // center 600 600 limit 1000 1000 
+	total_draw(env, coords);
+	mlx_key_hook(env->win, key_pressed, &env);
 	mlx_loop(mlx);
 }
