@@ -16,17 +16,31 @@
 **	Bresenham Algorithm for tracing a line.
 */
 
-/*void	try_draw_line(int x1, int y1, int x2, int y2, t_coords coords)
+void 	bresenham(t_env env)
+{
+	int delta_x;
+	int delta_y;
+	int incrx;
+	int incry;
+	incrx = (x2 - x1) ? 1 : -1;
+	incry = (y2 - y1) ? 1 : -1;
+
+
+	delta_x = abs(x2 - x1);
+	delta_y = abs(y2 - y1);
+
+
+}
+
+void	try_draw_line(t_env)
 {
 	int delta_x;
 	int delta_y;
 	int incr1;
 	int incr2;
 
-	delta_x = abs(x2 - x1);
-	delta_y = abs(y2 - y1);
-	incr1 = (x2 - x1) ? 1 : -1;
-	incr2 = (y2 - y1) ? 1 : -1;
+	
+	
 	if ((delta_x - delta_y) > 0) 
 		pixels(env, 1); 
 	else
@@ -36,8 +50,9 @@
 void 	pixels(t_env, int decider)
 {
 
+	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
 }
-*/
+
 
 /*
 **	Events
@@ -46,7 +61,7 @@ void 	pixels(t_env, int decider)
 int 	key_pressed(int keycode, t_env env)
 {
 	if (keycode == 53)
-		exit(1);
+		exit(0);
 	return (0);
 }
 

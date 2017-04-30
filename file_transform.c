@@ -13,60 +13,72 @@
 #include "fdf.h"
 
 /*
-**	All the coords handling is here.
-**	Get a line, allocate a serie of t_coord
-**		Then assign all coords with sub function
+**	Determine the max x coord, in order to malloc good size
 */
 
-t_coord		**work_coords(int fd)
+int 	determine_eastmax(char *line)
 {
-	int		south;
-	t_coord **tmpall;
-	char 	*line = NULL;
-	
-	if (!(tmpall = (t_coord**)malloc(sizeof(t_coord**))))
-		return (NULL);
+	int i;
+	char **tab;
+
+	i = 0;
+	tab = ft_strsplit(line,' ');
+	if (false_tab(tab) == 1)
+		return (-1);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+/*
+**	Malloc and store a line of z coord
+*/
+
+t_env	work_coords(int fd, t_env env)
+{
+	char 	*line;
+	int 	south;
+
+	line = NULL;
 	south = 0;
 	while ((get_next_line(fd, &line)) == 1)
 	{
-		if (!(tmpall[south] = (t_coord*)malloc(sizeof(t_coord*))))
+		if ((env->eastmax = determine_eastmax(line)) == -1)
 			return (NULL);
-		if ((tmpall[south] = assign_all_coords(line, south)) == NULL)
+		if (!(env->tab[south] = (int *)malloc(sizeof(int) * env->eastmax)))
+			return (NULL);
+		if ((env->tab[south] = assign_all_coords(line, env)) == NULL)
 			return (NULL);
 		south++;
 	}
-	return (tmpall);
+	env->southmax = south;
+	return (env);
 }
 
 /*
-**	Assign the coords given by the file to a tab of t_coord.
+**	Transforms a line into a tab of int
 */
 
-t_coord		*assign_all_coords(char *line, int south)
+int		*assign_all_coords(char *line, t_env env)
 {
 	char 	**tab;
 	int 	i;
-	t_coord *aline;
+	int 	oneline;
 
+	i = 0;
 	tab = ft_strsplit(line, ' ');
 	if (false_tab(tab) == 1)
 		return (NULL);
-	if (!(aline = (t_coord*)malloc(sizeof(t_coord) * ft_tablen_str(tab))))
-		return (NULL);
-	i = 0;
-	while(tab[i] != NULL)
+	while(tab[i])
 	{
-		aline[i].x = i;
-		aline[i].y = south;
-		aline[i].z = ft_atoi(tab[i]);
-		i++;
+		oneline[i] = ft_atoi(tab[i]);
+		len++;
 	}
-	return (aline);
+	return (oneline);
 }
 
 /*
-**	Gives length of a tab 
-**	Need to add in libft
+**	Error detect
 */
 
 int 	false_tab(char **tab)
@@ -97,39 +109,39 @@ int 	false_tab(char **tab)
 **	Gives nb of strings in a tab
 */
 
-int 	ft_tablen_str(char **tab)
-{
-	int i;
+// int 	ft_tablen_str(char **tab)
+// {
+// 	int i;
 
-	i = 0;
-	while (tab[i] != NULL)
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (tab[i] != NULL)
+// 		i++;
+// 	return (i);
+// }
 
 /*
 **	Print all (debug)
 */
 
-void	print_coords(t_coord **coords)
-{
-	int i;
-	int j;
+// void	print_coords(t_coord **coords)
+// {
+// 	int i;
+// 	int j;
 
-	j = 0;
-	i = 0;
-	while (1)
-	{
-		while (1)
-		{
-			printf("x = %d || y = %d || z = %d \n", coords[i][j].x, coords[i][j].y, coords[i][j].z);
-			j++;
-			if ((coords[i][j-1].x + 1) != coords[i][j].x)
-				break;
-		}
-		i++;
-		j = 0;
-		if ((coords[i-1][j].y + 1) != coords[i][j].y)
-			break;
-	}
-}
+// 	j = 0;
+// 	i = 0;
+// 	while (1)
+// 	{
+// 		while (1)
+// 		{
+// 			printf("x = %d || y = %d || z = %d \n", coords[i][j].x, coords[i][j].y, coords[i][j].z);
+// 			j++;
+// 			if ((coords[i][j-1].x + 1) != coords[i][j].x)
+// 				break;
+// 		}
+// 		i++;
+// 		j = 0;
+// 		if ((coords[i-1][j].y + 1) != coords[i][j].y)
+// 			break;
+// 	}
+// }

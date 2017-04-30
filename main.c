@@ -13,16 +13,30 @@
 #include "fdf.h"
 
 
-t_env init_map(t_env env)
+t_env 	init_map(t_env env)
 {
 	env.height = 1200;
 	env.width = 1200;
+	env.colour = 0x00FFFFFF;
+	env.decalx = 0;
+	env.decaly = 0;
+	env.linesizex = 0;
+	env.linesizey = 0;
 	return (env);
 }
-
-int main(int argc, char **argv)
+				
+void 	ft_map(t_env env)
 {
-	t_coord **coords;
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF");
+	ft_mapdraw(env);
+	mlx_key_hook(env->win, key_pressed, env);
+	//mlx_hook(env->win, 17, (1L << 17), exit(0), env);
+	mlx_loop(env->mlx);
+}
+
+int 	main(int argc, char **argv)
+{
 	t_env	env;
 	int 	fd;
 
@@ -30,14 +44,9 @@ int main(int argc, char **argv)
 		return (usage());
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
-	coords = work_coords(fd);
-	if (coords == NULL)
+	if (work_coords(fd, env) == NULL)
 		return (error());
-	close(fd);
 	env = init_map(env);
-
-
-	//ft_mapdraw(env, coords);
-	//print_coords(coords);
+	ft_map(env);
 	return (0);
 }
