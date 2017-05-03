@@ -16,42 +16,40 @@
 **	Bresenham Algorithm for tracing a line.
 */
 
-void 	bresenham(t_env env)
-{
-	int delta_x;
-	int delta_y;
-	int incrx;
-	int incry;
-	incrx = (x2 - x1) ? 1 : -1;
-	incry = (y2 - y1) ? 1 : -1;
+// void 	bresenham(t_env env)
+// {
+// 	int delta_x;
+// 	int delta_y;
+// 	int incrx;
+// 	int incry;
+// 	incrx = (x2 - x1) ? 1 : -1;
+// 	incry = (y2 - y1) ? 1 : -1;
 
 
-	delta_x = abs(x2 - x1);
-	delta_y = abs(y2 - y1);
+// 	delta_x = abs(x2 - x1);
+// 	delta_y = abs(y2 - y1);
 
 
-}
+// }
 
-void	try_draw_line(t_env)
-{
-	int delta_x;
-	int delta_y;
-	int incr1;
-	int incr2;
+// void	try_draw_line(t_env env)
+// {
+// 	int delta_x;
+// 	int delta_y;
+// 	int incr1;
+// 	int incr2;
 
-	
-	
-	if ((delta_x - delta_y) > 0) 
-		pixels(env, 1); 
-	else
-		pixels(env, 0);
-}
+// 	if ((delta_x - delta_y) > 0) 
+// 		pixels(env, 1); 
+// 	else
+// 		pixels(env, 0);
+// }
 
-void 	pixels(t_env, int decider)
-{
+// void 	pixels(t_env env, int decider)
+// {
 
-	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
-}
+// 	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
+// }
 
 
 /*

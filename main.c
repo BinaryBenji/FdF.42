@@ -27,12 +27,12 @@ t_env 	init_map(t_env env)
 				
 void 	ft_map(t_env env)
 {
-	env->mlx = mlx_init();
-	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF");
-	ft_mapdraw(env);
-	mlx_key_hook(env->win, key_pressed, env);
+	env.mlx = mlx_init();
+	env.win = mlx_new_window(env.mlx, env.width, env.height, "FdF");
+	//ft_map(env);
+	mlx_key_hook(env.win, key_pressed, env.mlx); // last argue is strange
 	//mlx_hook(env->win, 17, (1L << 17), exit(0), env);
-	mlx_loop(env->mlx);
+	mlx_loop(env.mlx);
 }
 
 int 	main(int argc, char **argv)
@@ -44,8 +44,8 @@ int 	main(int argc, char **argv)
 		return (usage());
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
-	if (work_coords(fd, env) == NULL)
-		return (error());
+	work_coords(fd, env);
+	
 	env = init_map(env);
 	ft_map(env);
 	return (0);

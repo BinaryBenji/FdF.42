@@ -16,6 +16,12 @@
 **	Error case
 */
 
+int 	exiterror(void)
+{
+	ft_putstr_fd("error\n", 1);
+	exit(-1);
+}
+
 int		error(void)
 {
 	ft_putstr_fd("error\n", 1);

@@ -41,17 +41,19 @@ t_env	work_coords(int fd, t_env env)
 
 	line = NULL;
 	south = 0;
+	if (!(env.tab = (int **)malloc(sizeof(int**))))
+		exiterror();
 	while ((get_next_line(fd, &line)) == 1)
 	{
-		if ((env->eastmax = determine_eastmax(line)) == -1)
-			return (NULL);
-		if (!(env->tab[south] = (int *)malloc(sizeof(int) * env->eastmax)))
-			return (NULL);
-		if ((env->tab[south] = assign_all_coords(line, env)) == NULL)
-			return (NULL);
+		if ((env.eastmax = determine_eastmax(line)) == -1)
+			exiterror();
+		if (!(env.tab[south] = (int *)malloc(sizeof(int) * env.eastmax)))
+			exiterror();
+		if ((env.tab[south] = assign_all_coords(line, env)) == NULL)
+			exiterror();
 		south++;
 	}
-	env->southmax = south;
+	env.southmax = south;
 	return (env);
 }
 
@@ -63,8 +65,10 @@ int		*assign_all_coords(char *line, t_env env)
 {
 	char 	**tab;
 	int 	i;
-	int 	oneline;
+	int 	*oneline;
 
+	if (!(oneline = (int *)malloc(sizeof(int) * ft_strlen(line))))
+		return (NULL);
 	i = 0;
 	tab = ft_strsplit(line, ' ');
 	if (false_tab(tab) == 1)
@@ -72,7 +76,7 @@ int		*assign_all_coords(char *line, t_env env)
 	while(tab[i])
 	{
 		oneline[i] = ft_atoi(tab[i]);
-		len++;
+		i++;
 	}
 	return (oneline);
 }
