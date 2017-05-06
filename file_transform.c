@@ -31,7 +31,7 @@ int 	determine_eastmax(char *line)
 }
 
 /*
-**	Malloc and store a line of z coord
+**	Malloc and store a line in tab
 */
 
 t_env	work_coords(int fd, t_env env)
@@ -41,7 +41,7 @@ t_env	work_coords(int fd, t_env env)
 
 	line = NULL;
 	south = 0;
-	if (!(env.tab = (int **)malloc(sizeof(int**))))
+	if (!(env.tab = (int **)malloc(sizeof(int **))))
 		exiterror();
 	while ((get_next_line(fd, &line)) == 1)
 	{
@@ -54,7 +54,28 @@ t_env	work_coords(int fd, t_env env)
 		south++;
 	}
 	env.southmax = south;
+	debugcoords(env);
 	return (env);
+}
+
+/*
+**	Print all (debug)
+*/
+
+void 	debugcoords(t_env env)
+{
+	int i;
+
+	i = 0;
+	while (env.tab[i] != NULL)
+	{
+		ft_putstr("Ligne ");
+		ft_putnbr(i);
+		ft_putstr(" : ")
+		ft_putstr(env.tab[i]);
+		ft_putstr('\n');
+		i++;
+	}
 }
 
 /*
@@ -107,45 +128,3 @@ int 	false_tab(char **tab)
 	}
 	return (0);
 }
-
-
-/*
-**	Gives nb of strings in a tab
-*/
-
-// int 	ft_tablen_str(char **tab)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (tab[i] != NULL)
-// 		i++;
-// 	return (i);
-// }
-
-/*
-**	Print all (debug)
-*/
-
-// void	print_coords(t_coord **coords)
-// {
-// 	int i;
-// 	int j;
-
-// 	j = 0;
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		while (1)
-// 		{
-// 			printf("x = %d || y = %d || z = %d \n", coords[i][j].x, coords[i][j].y, coords[i][j].z);
-// 			j++;
-// 			if ((coords[i][j-1].x + 1) != coords[i][j].x)
-// 				break;
-// 		}
-// 		i++;
-// 		j = 0;
-// 		if ((coords[i-1][j].y + 1) != coords[i][j].y)
-// 			break;
-// 	}
-// }

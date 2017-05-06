@@ -32,24 +32,30 @@
 
 // }
 
-// void	try_draw_line(t_env env)
-// {
-// 	int delta_x;
-// 	int delta_y;
-// 	int incr1;
-// 	int incr2;
+void	draw_line(t_env env)
+{
+	int delta_x;
+	int delta_y;
+	
 
-// 	if ((delta_x - delta_y) > 0) 
-// 		pixels(env, 1); 
-// 	else
-// 		pixels(env, 0);
-// }
+	if ((delta_x - delta_y) > 0) 
+		pixels(env, 1); 
+	else
+		pixels(env, 0);
+}
 
-// void 	pixels(t_env env, int decider)
-// {
+void 	pixels(t_env env, int decider)
+{
+	if (decider == 0)
+	{
 
-// 	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
-// }
+	}
+	else
+	{
+
+	}
+	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
+}
 
 
 /*
@@ -58,20 +64,19 @@
 
 int 	key_pressed(int keycode, t_env env)
 {
-	if (keycode == 53)
+	if (keycode == 53) // quit
 		exit(0);
+	if (keycode == 30) // up
+	{ 
+		mlx_clear_window(env->mlx, env->win);
+		env->z = z--;
+	}
+	if (keycode == 31) // down
+	{
+		mlx_clear_window(env->mlx, env->win);
+		env->z = z++;
+	}
+	total_draw(env);
 	return (0);
 }
 
-/*
-**	Initialize the map which moves according to events
-*/
-
-/*void	ft_mapdraw(t_coord **coords, t_env env)
-{
-	env->mlx = mlx_init();
-	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF"); // center 600 600 limit 1000 1000 
-	total_draw(env, coords);
-	mlx_key_hook(env->win, key_pressed, &env);
-	mlx_loop(mlx);
-}*/
