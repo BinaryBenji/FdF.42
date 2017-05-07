@@ -32,30 +32,30 @@
 
 // }
 
-void	draw_line(t_env env)
-{
-	int delta_x;
-	int delta_y;
+// void	draw_line(t_env env)
+// {
+// 	int delta_x;
+// 	int delta_y;
 	
 
-	if ((delta_x - delta_y) > 0) 
-		pixels(env, 1); 
-	else
-		pixels(env, 0);
-}
+// 	if ((delta_x - delta_y) > 0) 
+// 		pixels(env, 1); 
+// 	else
+// 		pixels(env, 0);
+// }
 
-void 	pixels(t_env env, int decider)
-{
-	if (decider == 0)
-	{
+// void 	pixels(t_env env, int decider)
+// {
+// 	if (decider == 0)
+// 	{
 
-	}
-	else
-	{
+// 	}
+// 	else
+// 	{
 
-	}
-	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
-}
+// 	}
+// 	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
+// }
 
 
 /*
@@ -68,15 +68,15 @@ int 	key_pressed(int keycode, t_env env)
 		exit(0);
 	if (keycode == 30) // up
 	{ 
-		mlx_clear_window(env->mlx, env->win);
-		env->z = z--;
+		mlx_clear_window(env.mlx, env.win);
+		env.z--;
 	}
 	if (keycode == 31) // down
 	{
-		mlx_clear_window(env->mlx, env->win);
-		env->z = z++;
+		mlx_clear_window(env.mlx, env.win);
+		env.z++;
 	}
-	total_draw(env);
+	//total_draw(env);
 	return (0);
 }
 

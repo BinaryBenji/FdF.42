@@ -39,22 +39,20 @@ t_env	work_coords(int fd, t_env env)
 	char 	*line;
 	int 	south;
 
-	line = NULL;
-	south = 0;
 	if (!(env.tab = (int **)malloc(sizeof(int **))))
 		exiterror();
+	line = NULL;
+	south = 0;
 	while ((get_next_line(fd, &line)) == 1)
 	{
 		if ((env.eastmax = determine_eastmax(line)) == -1)
 			exiterror();
-		if (!(env.tab[south] = (int *)malloc(sizeof(int) * env.eastmax)))
-			exiterror();
-		if ((env.tab[south] = assign_all_coords(line, env)) == NULL)
+		if ((env.tab[south] = assign_all_coords(line)) == NULL)
 			exiterror();
 		south++;
 	}
 	env.southmax = south;
-	debugcoords(env);
+	//debugcoords(env);
 	return (env);
 }
 
@@ -65,15 +63,23 @@ t_env	work_coords(int fd, t_env env)
 void 	debugcoords(t_env env)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (env.tab[i] != NULL)
+	j = 0;
+	while (i < env.southmax)
 	{
 		ft_putstr("Ligne ");
 		ft_putnbr(i);
-		ft_putstr(" : ")
-		ft_putstr(env.tab[i]);
-		ft_putstr('\n');
+		ft_putstr(" : ");
+		while (j < env.eastmax)
+		{
+			ft_putnbr(env.tab[i][j]);
+			ft_putchar(' ');
+			j++;
+		}
+		ft_putstr("\n");
+		j = 0;
 		i++;
 	}
 }
@@ -82,7 +88,7 @@ void 	debugcoords(t_env env)
 **	Transforms a line into a tab of int
 */
 
-int		*assign_all_coords(char *line, t_env env)
+int		*assign_all_coords(char *line)
 {
 	char 	**tab;
 	int 	i;
@@ -92,9 +98,9 @@ int		*assign_all_coords(char *line, t_env env)
 		return (NULL);
 	i = 0;
 	tab = ft_strsplit(line, ' ');
-	if (false_tab(tab) == 1)
-		return (NULL);
-	while(tab[i])
+	// if (false_tab(tab) == 1)
+	// 	return (NULL);
+	while (tab[i])
 	{
 		oneline[i] = ft_atoi(tab[i]);
 		i++;
