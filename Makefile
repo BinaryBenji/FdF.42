@@ -10,41 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# Disable implicit rules
+###############################################################################
+
+# 	Disable implicit rules
 .SUFFIXES:
-
-# Compiler configuration
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-## Flags for the C preprocessor
-CPPFLAGS = -I$(SRC_PATH) -I$(LIB)
-## Libraries path
-LDFLAGS = -L$(LIB)
-## Libraries to link into the executable
-LDLIBS = -lft
-NAME = fdf
-
-# Project related variables
-SRC_PATH =  src
-SRC_NAME =  main.c \
+# 	Compiler configuration
+CC = 			gcc
+#	C Flags
+CFLAGS = 		-Wall -Wextra -Werror
+#	Flags for the C preprocessor
+CPPFLAGS = 		-I$(SRC_PATH) -I$(LIB)
+#	Libraries path
+LDFLAGS = 		-L$(LIB)
+#	Libraries to link into the executable
+LDLIBS = 		-lft
+#  	Executable name
+NAME = 			fdf
+#  	Graphic Library
+GRAPH = 		-lmlx -framework OpenGL -framework AppKit
+# 	Path for sources
+SRC_PATH =  	src
+# 	Sources
+SRC_NAME =  	main.c \
 				utils.c \
-				file.c
-OBJ_PATH =  obj
-OBJ_NAME = $(SRC_NAME:.c=.o)
-SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
-OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
-LIB = libft
-HEADER = $(SRC_PATH)/$(NAME).h
-
+				file_transform.c \
+				mapdraw.c
+#	Path for OBJ
+OBJ_PATH =  	obj
+#	Name of OBJ files
+OBJ_NAME = 		$(SRC_NAME:.c=.o)
+#	Full Paths
+SRC = 			$(addprefix $(SRC_PATH)/,$(SRC_NAME))
+OBJ = 			$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+#	Libft path
+LIB = 			libft
+#	Header file Path
+HEADER = 		$(SRC_PATH)/$(NAME).h
+#	LLDB Debug flag
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
     CFLAGS += -g
 endif
 
+###############################################################################
+
 all: $(NAME)
 
 $(NAME): $(LIB)/$(LIB).a $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME) $(GRAPH)
 
 $(OBJ_PATH):
 	mkdir $@
@@ -75,3 +88,5 @@ fclean: clean
 
 re: fclean
 	$(MAKE) all
+
+###############################################################################

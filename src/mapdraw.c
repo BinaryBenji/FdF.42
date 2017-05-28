@@ -66,16 +66,16 @@ int 	key_pressed(int keycode, t_env env)
 {
 	if (keycode == 53) // quit
 		exit(0);
-	if (keycode == 30) // up
-	{ 
-		mlx_clear_window(env.mlx, env.win);
-		env.z--;
-	}
-	if (keycode == 31) // down
-	{
-		mlx_clear_window(env.mlx, env.win);
-		env.z++;
-	}
+	// if (keycode == 30) // up
+	// { 
+	// 	mlx_clear_window(env.mlx, env.win);
+	// 	env.z--;
+	// }
+	// if (keycode == 31) // down
+	// {
+	// 	mlx_clear_window(env.mlx, env.win);
+	// 	env.z++;
+	// }
 	//total_draw(env);
 	return (0);
 }

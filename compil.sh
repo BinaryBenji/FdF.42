@@ -1,1 +1,1 @@
-cc -o mlx main.c utils.c mapdraw.c file_transform.c libft/libft.a -g -lmlx -framework OpenGL -framework AppKit
+gcc -o mlx src/main.c src/utils.c src/mapdraw.c src/file_transform.c libft/libft.a -g -lmlx -framework OpenGL -framework AppKit
