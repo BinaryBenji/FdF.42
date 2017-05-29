@@ -1,92 +1,56 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Makefile                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/04 17:34:47 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/03/04 17:34:50 by bzmuda           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+#	Library
+NAME = 				fdf
+
+# 	Compiler 
+CC = 				gcc
+
+#	Flags for norme + LLDB
+CFLAGS = 			-Wall -Wextra -Werror -g
+GFLAGS =			-lft -lmlx -framework OpenGL -framework AppKit
+
+#	Headers infos
+HEA_PATH = 			./
+HEA_NAME = 			fdf.h
+HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
+
+#	Sources infos
+SRC_PATH = 			./
+SRC_NAME = 			$(shell ls | grep -E "ft_.+\.c")
+SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
+
+#	Objects infos
+OBJ_PATH = 			./
+OBJ_NAME = 			$(SRC_NAME:.c=.o)
+OBJ = 				$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+
 
 ###############################################################################
 
-# 	Disable implicit rules
-.SUFFIXES:
-# 	Compiler configuration
-CC = 			gcc
-#	C Flags
-CFLAGS = 		-Wall -Wextra -Werror
-#	Flags for the C preprocessor
-CPPFLAGS = 		-I$(SRC_PATH) -I$(LIB)
-#	Libraries path
-LDFLAGS = 		-L$(LIB)
-#	Libraries to link into the executable
-LDLIBS = 		-lft
-#  	Executable name
-NAME = 			fdf
-#  	Graphic Library
-GRAPH = 		-lmlx -framework OpenGL -framework AppKit
-# 	Path for sources
-SRC_PATH =  	src
-# 	Sources
-SRC_NAME =  	main.c \
-				utils.c \
-				file_transform.c \
-				mapdraw.c
-#	Path for OBJ
-OBJ_PATH =  	obj
-#	Name of OBJ files
-OBJ_NAME = 		$(SRC_NAME:.c=.o)
-#	Full Paths
-SRC = 			$(addprefix $(SRC_PATH)/,$(SRC_NAME))
-OBJ = 			$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
-#	Libft path
-LIB = 			libft
-#	Header file Path
-HEADER = 		$(SRC_PATH)/$(NAME).h
-#	LLDB Debug flag
-DEBUG ?= 0
-ifeq ($(DEBUG), 1)
-    CFLAGS += -g
-endif
-
-###############################################################################
 
 all: $(NAME)
 
-$(NAME): $(LIB)/$(LIB).a $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $(NAME) $(GRAPH)
+$(NAME): 			$(OBJ) $(HEA)
+					@make -C libft/
+					@$(CC) $(CFLAGS) $(OBJ) $(GFLAGS) libft/libft.a -o $(NAME)
+					@echo "FdF compilation complete."
 
-$(OBJ_PATH):
-	mkdir $@
+%.o: 				%.c $(HEA)
+					@$(CC) $(CFLAGS) -c $< -o $@ 
 
-$(OBJ): | $(OBJ_PATH)
+clean:				
+					@rm -rf $(OBJ)
+					@make -C libft clean
+					@echo "Object files deleted." 
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADER)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+fclean: 			clean
+					@make -C libft fclean
+					@rm -rf $(NAME) 
+					@echo "Executable deleted." 
 
-# /!\ Dirty workaround /!\
-# If make on the libft directory should rebuild something then PHONY the rule
-# libft to build it. Otherwise it relink.
-ifeq ($(shell $(MAKE) --question -C ./$(LIB) ; echo $$?), 1)
-.PHONY: $(LIB)/$(LIB).a
-endif
+re: 				fclean all
 
-$(LIB)/$(LIB).a:
-	$(MAKE) -C ./$(LIB)
+.PHONY: 			all clean fclean re
 
-.PHONY: clean
-clean:
-	$(MAKE) -C ./$(LIB) clean
-	$(RM) -r $(OBJ_PATH)
-
-fclean: clean
-	$(MAKE) -C ./$(LIB) fclean
-	$(RM) -r $(NAME) $(NAME).dSYM
-
-re: fclean
-	$(MAKE) all
 
 ###############################################################################
