@@ -10,17 +10,17 @@ CFLAGS = 			-Wall -Wextra -Werror -g
 GFLAGS =			-lft -lmlx -framework OpenGL -framework AppKit
 
 #	Headers infos
-HEA_PATH = 			./
+HEA_PATH = 			./src
 HEA_NAME = 			fdf.h
 HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 
 #	Sources infos
-SRC_PATH = 			./
+SRC_PATH = 			./src
 SRC_NAME = 			$(shell ls | grep -E "ft_.+\.c")
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos
-OBJ_PATH = 			./
+OBJ_PATH = 			./src
 OBJ_NAME = 			$(SRC_NAME:.c=.o)
 OBJ = 				$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
