@@ -13,42 +13,55 @@
 #include "fdf.h"
 
 
-t_env 	init_map(t_env env)
+t_env 	init_map(t_env *env)
 {
-	env.height = 1200;
-	env.width = 1200;
-	env.color = 0x00FFFFFF;
-	env.decalx = 0;
-	env.decaly = 0;
-	env.linesizex = 0;
-	env.linesizey = 0;
-	env.z = 0;
-	return (env);
+	env->height = 1200;
+	env->width = 1200;
+	env->color = 0x00FFFFFF;
+	env->decalx = 0;
+	env->decaly = 0;
+	env->linesizex = 16;
+	env->linesizey = 32;
+	env->z = 0;
+	return (*env);
 }
 
-void 	ft_map(t_env env)
+void 	ft_map(t_env *env)
 {
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, env.width, env.height, "FdF");
-	//mlx_pixel_put(env.mlx, env.win, 200, 200, 0xFF0000);
-	//drawing(env);
-	mlx_key_hook(env.win, key_pressed, 0);
-	mlx_loop(env.mlx);
-	//return (1);
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF");
+	draw(env);
+	mlx_key_hook(env->win, key_pressed, env);
+	mlx_loop(env->mlx);
+}
+
+void 	calc_southmax(int fd, t_env *env)
+{
+	char 	*line;
+	int 	south;
+
+	south = 0;
+	line = NULL;
+	while ((get_next_line(fd, &line)) == 1)
+		south++;
+	env->southmax = south;
 }
 
 int 	main(int argc, char **argv)
 {
 	t_env		env;
-	t_coords 	coords;
 	int 		fd;
 
 	if (argc != 2)
 		return (usage());
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
-	coords = work_coords(fd, coords);
-	env = init_map(env);
-	ft_map(env);
+	init_map(&env);
+	calc_southmax(fd, &env);
+	close(fd);
+	if (!(fd = open(argv[1], O_RDONLY)))
+		return (error());
+	work_coords(fd, &env);
+	ft_map(&env);
 	return (0);
 }

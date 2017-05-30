@@ -32,17 +32,21 @@
 
 // }
 
-// void	draw_line(t_env env)
-// {
-// 	int delta_x;
-// 	int delta_y;
-	
-
-// 	if ((delta_x - delta_y) > 0) 
-// 		pixels(env, 1); 
-// 	else
-// 		pixels(env, 0);
-// }
+void	draw(t_env *env)
+{
+	int i = 0;
+	int j = 0;
+	while (i < env->southmax)
+	{
+		while (j < env->eastmax[i])
+		{
+			mlx_pixel_put(env->mlx, env->win, (350 +(j - i) * env->linesizey), (350 +(j + i) * env->linesizex) , env->color);
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+}
 
 // void 	pixels(t_env env, int decider)
 // {
@@ -62,21 +66,36 @@
 **	Events
 */
 
-int 	key_pressed(int keycode, t_env env)
+int 	key_pressed(int keycode, t_env *env)
 {
 	if (keycode == 53) // quit
 		exit(0);
-	// if (keycode == 30) // up
-	// { 
-	// 	mlx_clear_window(env.mlx, env.win);
-	// 	env.z--;
-	// }
-	// if (keycode == 31) // down
-	// {
-	// 	mlx_clear_window(env.mlx, env.win);
-	// 	env.z++;
-	// }
-	//total_draw(env);
+	if (keycode == 126) // up
+	{ 
+		//mlx_clear_window(env->mlx, env->win);
+		env->z++;
+		printf("UP key : Zoom in. || Z new value : %d\n", env->z);
+	}
+	if (keycode == 125) // down
+	{
+		//mlx_clear_window(env.mlx, env.win);
+		env->z--;
+		printf("DOWN key : Zoom out. || Z new value : %d\n", env->z);
+	}
+	if (keycode == 11)
+	{
+		env->color = 0x0000FF;
+		mlx_clear_window(env->mlx, env->win);
+		draw(env);
+		printf("New color : BLUE");
+	}
+	if (keycode == 15)
+	{
+		env->color = 0xFF0000;
+		mlx_clear_window(env->mlx, env->win);
+		draw(env);
+		printf("New color : RED");
+	}
+	printf("keycode : %d\n", keycode);
 	return (0);
 }
-

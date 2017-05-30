@@ -16,7 +16,7 @@
 **	Determine the max x coord, in order to malloc good size
 */
 
-int 	determine_eastmax(char *line)
+int 	determine_eastmax(char *line, t_env *env, int south)
 {
 	int i;
 	char **tab;
@@ -27,6 +27,7 @@ int 	determine_eastmax(char *line)
 		return (-1);
 	while (tab[i])
 		i++;
+	env->eastmax[south] = tablen(tab);
 	return (i);
 }
 
@@ -34,60 +35,63 @@ int 	determine_eastmax(char *line)
 **	Malloc and store a line in tab 
 */
 
-t_coords	work_coords(int fd, t_coords coords)
+t_env		work_coords(int fd, t_env *env)
 {
 	char 	*line;
 	int 	south;
 
-	if (!(coords.tab = (int **)malloc(sizeof(int **))))
+	if (!(env->tab = (int **)malloc(sizeof(int *) * (env->southmax))))
+		exiterror();
+	if (!(env->eastmax = (int *)malloc(sizeof(int) * (env->southmax))))
 		exiterror();
 	line = NULL;
 	south = 0;
+
 	while ((get_next_line(fd, &line)) == 1)
 	{
-		if ((determine_eastmax(line)) == -1)
+		if ((determine_eastmax(line, env, south)) == -1)
 			exiterror();
-		if ((coords.tab[south] = assign_all_coords(line, coords)) == NULL)
+		if ((env->tab[south] = assign_all_coords(line)) == NULL)
 			exiterror();
 		south++;
 	}
-	//debugcoords(coords);
-	return (coords);
+	debugcoords(*env);
+	return (*env);
 }
 
 /*
 **	Print all (debug)
 */
 
-// void 	debugcoords(t_coords coords)
-// {
-// 	int i;
-// 	int j;
+void 	debugcoords(t_env env)
+{
+	int i;
+	int j;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (i < coords->southmax)
-// 	{
-// 		ft_putstr("Ligne ");
-// 		ft_putnbr(i);
-// 		ft_putstr(" : ");
-// 		while (j < coords->eastmax)
-// 		{
-// 			ft_putnbr(coords->tab[i][j]);
-// 			ft_putchar(' ');
-// 			j++;
-// 		}
-// 		ft_putstr("\n");
-// 		j = 0;
-// 		i++;
-// 	}
-// }
+	i = 0;
+	j = 0;
+	while (i < env.southmax)
+	{
+		ft_putstr("Ligne ");
+		ft_putnbr(i);
+		ft_putstr(" : ");
+		while (j < env.eastmax[i])
+		{
+			ft_putnbr(env.tab[i][j]);
+			ft_putchar(' ');
+			j++;
+		}
+		ft_putstr("\n");
+		j = 0;
+		i++;
+	}
+}
 
 /*
 **	Transforms a line into a tab of int
 */
 
-int		*assign_all_coords(char *line, t_coords coords)
+int		*assign_all_coords(char *line)
 {
 	char 	**tab;
 	int 	i;
@@ -143,14 +147,4 @@ int 	false_tab(char **tab)
 		j = 0;
 	}
 	return (0);
-}
-
-int 	tablen(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i] != NULL)
-		i++;
-	return (i);
 }

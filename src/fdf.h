@@ -32,25 +32,20 @@ typedef struct 		s_env
 	int  			linesizex;
 	int  			linesizey;
 	int 			southmax;
-	int 			eastmax;
+	int 			*eastmax;
 	unsigned long 	color;
+	int 			**tab;
 }			   		t_env;
 
-typedef struct 		s_coords
-{
-	int 			**tab;
-}					t_coords;
-
-void		draw_line(int x1, int y1, int x2, int y2, void *mlx, void *win);
 int			error(void);
 int			usage(void);
-t_coords	work_coords(int fd, t_coords coords);
-int			*assign_all_coords(char *line, t_coords coords);
-int 		ft_tablen_str(char **tab);
-void 		ft_map(t_env env);
+t_env		work_coords(int fd, t_env *env);
+int			*assign_all_coords(char *line);
+void 		ft_map(t_env *env);
+void		draw(t_env *env);
 int 		false_tab(char **tab);
-t_env 		init_map(t_env env);
-int 		key_pressed(int keycode, t_env env);
+t_env 		init_map(t_env *env);
+int 		key_pressed(int keycode, t_env *env);
 int 		exiterror(void);
 void 		debugcoords(t_env env);
 int 		tablen(char **tab);

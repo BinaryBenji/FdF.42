@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/05/30 09:43:03 by bzmuda            #+#    #+#              #
+#    Updated: 2017/05/30 09:43:09 by bzmuda           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 #	Library
 NAME = 				fdf
@@ -7,7 +18,7 @@ CC = 				gcc
 
 #	Flags for norme + LLDB
 CFLAGS = 			-Wall -Wextra -Werror -g
-GFLAGS =			-lft -lmlx -framework OpenGL -framework AppKit
+GFLAGS =			-lmlx -framework OpenGL -framework AppKit
 
 #	Headers infos
 HEA_PATH = 			./src
@@ -16,7 +27,7 @@ HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 
 #	Sources infos
 SRC_PATH = 			./src
-SRC_NAME = 			$(shell ls | grep -E "ft_.+\.c")
+SRC_NAME = 			file_transform.c main.c mapdraw.c utils.c
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos

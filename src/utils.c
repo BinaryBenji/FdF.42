@@ -37,3 +37,17 @@ int		usage(void)
 	ft_putstr_fd("usage: fdf file\n", 2);
 	return (-1);
 }
+
+/*
+**	Gives number of elements in a table of string.
+*/
+
+int 	tablen(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i] != NULL)
+		i++;
+	return (i);
+}
