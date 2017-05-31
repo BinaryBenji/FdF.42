@@ -12,29 +12,11 @@
 
 #include "fdf.h"
 
-/*
-**	Bresenham Algorithm for tracing a line.
-*/
-
-// void 	bresenham(t_env env)
-// {
-// 	int delta_x;
-// 	int delta_y;
-// 	int incrx;
-// 	int incry;
-// 	incrx = (x2 - x1) ? 1 : -1;
-// 	incry = (y2 - y1) ? 1 : -1;
-
-
-// 	delta_x = abs(x2 - x1);
-// 	delta_y = abs(y2 - y1);
-
-
-// }
-
 void	draw(t_env *env)
 {
-	int i = 0;
+	draw_all_x(env);
+	draw_all_y(env);
+	/*int i = 0;
 	int j = 0;
 	while (i < env->southmax)
 	{
@@ -45,21 +27,80 @@ void	draw(t_env *env)
 		}
 		i++;
 		j = 0;
+	}*/
+}
+
+/*
+**	Positive case (dx > dy)
+*/
+
+void	positive(t_env *env)
+{
+	int err;
+	int i;
+
+	i = 0;
+	err = env->dx/2;
+	while (i < env->dx)
+	{
+		env->x1 += incrx;
+		if (err > dx)
+		{
+			err -= env->dx;
+			env->y1 += incry;
+		}
+		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
+		i++;
 	}
 }
 
-// void 	pixels(t_env env, int decider)
-// {
-// 	if (decider == 0)
-// 	{
+/*
+**	Negative case (dx < dy)
+*/
 
-// 	}
-// 	else
-// 	{
+void	negative(t_env *env)
+{
+	int err;
+	int i;
 
-// 	}
-// 	mlx_pixel_put(fdf->mlx, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
-// }
+	i = 0;
+	err = env->dy/2;
+	while (i < env->dy)
+	{
+		env->y1 += incry;
+		if (err > dy)
+		{
+			err -= env->dy;
+			env->x1 += incrx;
+		}
+		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
+		i++;
+	}
+}
+
+
+/*
+**	Bresenham Algorithm
+**	Define values of incr, in order to obtain direction coefficients.
+**	Then draw in function of results.
+*/
+
+void 	pixels(t_env *env)
+{
+	env->incrx = (env->x2 > env->x1) ? 1 : -1;
+	env->incry = (env->y2 > env->y1) ? 1 : -1;
+	env->dx = abs(env->x2 - env->x1);
+	env->dy = abs(env->y2 - env->y1);
+	if (env->dx > env->dy)
+	{
+		positive(env);
+	}
+	else
+	{
+		negative(env);
+	}
+	mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
+}
 
 
 /*

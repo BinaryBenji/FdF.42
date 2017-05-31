@@ -18,8 +18,6 @@ t_env 	init_map(t_env *env)
 	env->height = 1200;
 	env->width = 1200;
 	env->color = 0x00FFFFFF;
-	env->decalx = 0;
-	env->decaly = 0;
 	env->linesizex = 16;
 	env->linesizey = 32;
 	env->z = 0;

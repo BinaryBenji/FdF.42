@@ -27,14 +27,20 @@ typedef struct 		s_env
 	int 			z;
 	int	 			width;
 	int	 			height;
-	int  			decalx;
-	int  			decaly;
 	int  			linesizex;
 	int  			linesizey;
 	int 			southmax;
 	int 			*eastmax;
 	unsigned long 	color;
 	int 			**tab;
+	int 			x1;
+	int 			x2;
+	int 			y1;
+	int 			y2;
+	int 			dx;
+	int 			dy;
+	int 			incrx;
+	int 			incry;
 }			   		t_env;
 
 int			error(void);
