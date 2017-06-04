@@ -28,7 +28,7 @@ typedef struct		s_list
 **	Get next line
 */
 
-int		get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
 
 /*
 **	Write

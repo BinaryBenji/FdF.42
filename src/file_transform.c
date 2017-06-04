@@ -6,7 +6,7 @@
 /*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 18:06:11 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/03/04 18:06:14 by bzmuda           ###   ########.fr       */
+/*   Updated: 2017/06/01 14:06:33 by bzmuda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 **	Determine the max x coord, in order to malloc good size
 */
 
-int 	determine_eastmax(char *line, t_env *env, int south)
+int		determine_eastmax(char *line, t_env *env, int south)
 {
-	int i;
-	char **tab;
+	int		i;
+	char	**tab;
 
 	i = 0;
-	tab = ft_strsplit(line,' ');
+	tab = ft_strsplit(line, ' ');
 	if (false_tab(tab) == 1)
 		return (-1);
 	while (tab[i])
@@ -32,13 +32,13 @@ int 	determine_eastmax(char *line, t_env *env, int south)
 }
 
 /*
-**	Malloc and store a line in tab 
+**	Malloc and store a line in tab
 */
 
-t_env		work_coords(int fd, t_env *env)
+t_env	work_coords(int fd, t_env *env)
 {
-	char 	*line;
-	int 	south;
+	char	*line;
+	int		south;
 
 	if (!(env->tab = (int **)malloc(sizeof(int *) * (env->southmax))))
 		exiterror();
@@ -46,11 +46,13 @@ t_env		work_coords(int fd, t_env *env)
 		exiterror();
 	line = NULL;
 	south = 0;
-
 	while ((get_next_line(fd, &line)) == 1)
 	{
 		if ((determine_eastmax(line, env, south)) == -1)
 			exiterror();
+		if (south != 0)
+			if (env->eastmax[south] != env->eastmax[south - 1])
+				exiterror();
 		if ((env->tab[south] = assign_all_coords(line)) == NULL)
 			exiterror();
 		south++;
@@ -63,7 +65,7 @@ t_env		work_coords(int fd, t_env *env)
 **	Print all (debug)
 */
 
-void 	debugcoords(t_env env)
+void	debugcoords(t_env env)
 {
 	int i;
 	int j;
@@ -93,18 +95,16 @@ void 	debugcoords(t_env env)
 
 int		*assign_all_coords(char *line)
 {
-	char 	**tab;
-	int 	i;
-	int 	*oneline;
-	int 	eastmax;
+	char	**tab;
+	int		i;
+	int		*oneline;
+	int		eastmax;
 
 	i = 0;
 	tab = ft_strsplit(line, ' ');
 	eastmax = tablen(tab);
 	if (!(oneline = (int *)malloc(sizeof(int) * eastmax)))
 		return (NULL);
-	// if (false_tab(tab) == 1)
-	// 	return (NULL);
 	while (tab[i] && (i < eastmax))
 	{
 		oneline[i] = ft_atoi(tab[i]);
@@ -117,17 +117,16 @@ int		*assign_all_coords(char *line)
 **	Error detect
 */
 
-int 	false_tab(char **tab)
+int		false_tab(char **tab)
 {
 	int i;
 	int j;
 
-	j = 0;
 	i = 0;
 	while (tab[i] != NULL)
 	{
+		j = 0;
 		while (tab[i][j] != '\0')
-		{
 			if (tab[i][j] == '-')
 			{
 				j++;
@@ -142,9 +141,7 @@ int 	false_tab(char **tab)
 				j++;
 			else
 				return (1);
-		}
 		i++;
-		j = 0;
 	}
 	return (0);
 }

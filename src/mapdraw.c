@@ -12,22 +12,60 @@
 
 #include "fdf.h"
 
-void	draw(t_env *env)
+/*
+**	Does what it should do :)
+*/
+
+void	draw_all_x(t_env *env)
 {
-	draw_all_x(env);
-	draw_all_y(env);
-	/*int i = 0;
-	int j = 0;
+	int i;
+
+	i = 0;
+	env->turn = 0;
 	while (i < env->southmax)
 	{
-		while (j < env->eastmax[i])
+		while (env->turn < env->eastmax[i] - 1)
 		{
-			mlx_pixel_put(env->mlx, env->win, (350 +(j - i) * env->linesizey), (350 +(j + i) * env->linesizex) , env->color);
-			j++;
+			env->x1 = env->view_x + (env->turn - i) * env->linesizex;
+			env->y1 = env->view_y + (env->turn + i) * env->linesizey
+				- (env->tab[i][env->turn] * env->z);
+			env->x2 = env->view_x + ((env->turn + 1) - i) * env->linesizex;
+			env->y2 = env->view_y + ((env->turn + 1) + i) * env->linesizey
+				- (env->tab[i][env->turn + 1] * env->z);
+			pixels(env);
+			env->turn++;
 		}
 		i++;
-		j = 0;
-	}*/
+		env->turn = 0;
+	}
+}
+
+/*
+**	Does what it should do :)
+*/
+
+void	draw_all_y(t_env *env)
+{
+	int i;
+
+	i = 0;
+	env->turn = 0;
+	while (i < env->southmax - 1)
+	{
+		while (env->turn < env->eastmax[i])
+		{
+			env->x1 = env->view_x + (env->turn - i) * env->linesizex;
+			env->y1 = env->view_y + (env->turn + i) * env->linesizey
+				- (env->tab[i][env->turn] * env->z);
+			env->x2 = env->view_x + ((env->turn) - (i + 1)) * env->linesizex;
+			env->y2 = env->view_y + ((env->turn) + (i + 1)) * env->linesizey
+				- (env->tab[i + 1][env->turn] * env->z);
+			pixels(env);
+			env->turn++;
+		}
+		i++;
+		env->turn = 0;
+	}
 }
 
 /*
@@ -40,16 +78,17 @@ void	positive(t_env *env)
 	int i;
 
 	i = 0;
-	err = env->dx/2;
+	err = env->dx / 2;
 	while (i < env->dx)
 	{
-		env->x1 += incrx;
-		if (err > dx)
+		env->x1 += env->incrx;
+		err += env->dy;
+		if (err > env->dx)
 		{
 			err -= env->dx;
-			env->y1 += incry;
+			env->y1 += env->incry;
 		}
-		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
+		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1, env->color);
 		i++;
 	}
 }
@@ -64,20 +103,20 @@ void	negative(t_env *env)
 	int i;
 
 	i = 0;
-	err = env->dy/2;
+	err = env->dy / 2;
 	while (i < env->dy)
 	{
-		env->y1 += incry;
-		if (err > dy)
+		env->y1 += env->incry;
+		err += env->dx;
+		if (err > env->dy)
 		{
 			err -= env->dy;
-			env->x1 += incrx;
+			env->x1 += env->incrx;
 		}
-		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
+		mlx_pixel_put(env->mlx, env->win, env->x1, env->y1, env->color);
 		i++;
 	}
 }
-
 
 /*
 **	Bresenham Algorithm
@@ -85,7 +124,7 @@ void	negative(t_env *env)
 **	Then draw in function of results.
 */
 
-void 	pixels(t_env *env)
+void	pixels(t_env *env)
 {
 	env->incrx = (env->x2 > env->x1) ? 1 : -1;
 	env->incry = (env->y2 > env->y1) ? 1 : -1;
@@ -99,44 +138,6 @@ void 	pixels(t_env *env)
 	{
 		negative(env);
 	}
-	mlx_pixel_put(env->mlx, env->win, env->x1, env->y1 , env->color);
-}
-
-
-/*
-**	Events
-*/
-
-int 	key_pressed(int keycode, t_env *env)
-{
-	if (keycode == 53) // quit
-		exit(0);
-	if (keycode == 126) // up
-	{ 
-		//mlx_clear_window(env->mlx, env->win);
-		env->z++;
-		printf("UP key : Zoom in. || Z new value : %d\n", env->z);
-	}
-	if (keycode == 125) // down
-	{
-		//mlx_clear_window(env.mlx, env.win);
-		env->z--;
-		printf("DOWN key : Zoom out. || Z new value : %d\n", env->z);
-	}
-	if (keycode == 11)
-	{
-		env->color = 0x0000FF;
-		mlx_clear_window(env->mlx, env->win);
-		draw(env);
-		printf("New color : BLUE");
-	}
-	if (keycode == 15)
-	{
-		env->color = 0xFF0000;
-		mlx_clear_window(env->mlx, env->win);
-		draw(env);
-		printf("New color : RED");
-	}
-	printf("keycode : %d\n", keycode);
-	return (0);
+	mlx_pixel_put(env->mlx, env->win, env->x1, env->y1, env->color);
+	mlx_pixel_put(env->mlx, env->win, env->x2, env->y2, env->color);
 }

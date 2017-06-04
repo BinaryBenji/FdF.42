@@ -27,7 +27,7 @@ HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 
 #	Sources infos
 SRC_PATH = 			./src
-SRC_NAME = 			file_transform.c main.c mapdraw.c utils.c
+SRC_NAME = 			file_transform.c main.c mapdraw.c utils.c events.c
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos

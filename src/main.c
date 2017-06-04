@@ -6,25 +6,44 @@
 /*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:34:47 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/05/28 16:56:46 by bzmuda           ###   ########.fr       */
+/*   Updated: 2017/06/01 13:32:10 by bzmuda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/*
+**	Draws x and y lines.
+*/
 
-t_env 	init_map(t_env *env)
+void	draw(t_env *env)
+{
+	draw_all_x(env);
+	draw_all_y(env);
+}
+
+/*
+**	Gives basic parameters to struct
+*/
+
+t_env	init_map(t_env *env)
 {
 	env->height = 1200;
 	env->width = 1200;
 	env->color = 0x00FFFFFF;
-	env->linesizex = 16;
-	env->linesizey = 32;
-	env->z = 0;
+	env->linesizex = 32;
+	env->linesizey = 16;
+	env->z = 2;
+	env->view_x = 400;
+	env->view_y = 400;
 	return (*env);
 }
 
-void 	ft_map(t_env *env)
+/*
+**	Loop of draw & events
+*/
+
+void	ft_map(t_env *env)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "FdF");
@@ -33,10 +52,14 @@ void 	ft_map(t_env *env)
 	mlx_loop(env->mlx);
 }
 
-void 	calc_southmax(int fd, t_env *env)
+/*
+**	Gives number of lines, in order to do correct malloc
+*/
+
+void	calc_southmax(int fd, t_env *env)
 {
-	char 	*line;
-	int 	south;
+	char	*line;
+	int		south;
 
 	south = 0;
 	line = NULL;
@@ -45,10 +68,14 @@ void 	calc_southmax(int fd, t_env *env)
 	env->southmax = south;
 }
 
-int 	main(int argc, char **argv)
+/*
+**	Main
+*/
+
+int		main(int argc, char **argv)
 {
 	t_env		env;
-	int 		fd;
+	int			fd;
 
 	if (argc != 2)
 		return (usage());
